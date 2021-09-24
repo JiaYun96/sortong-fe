@@ -8,9 +8,9 @@ import {
   Snackbar,
   TextField,
   Tooltip,
-} from "@material-ui/core";
+} from "@material-ui/core"
 import { Add as AddIcon } from "@material-ui/icons"
-import React, { useState, useImperativeHandle, forwardRef, ref } from "react";
+import React, { useState, useImperativeHandle, forwardRef, ref } from "react"
 import MuiAlert from "@material-ui/lab/Alert"
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 35,
     position: "fixed"
   },
+
   container: {
     width: "25% !important",
     height: "min-content",
@@ -34,12 +35,15 @@ const useStyles = makeStyles((theme) => ({
       height: "100vh",
     }
   },
+
   form: {
     padding: theme.spacing(2),
   },
+
   item: {
     marginBottom: theme.spacing(3),
   },
+
   taskModalTitle: {
     fontSize: "large",
     fontWeight: "500",
@@ -47,11 +51,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center"
   },
+
   btnGroup: {
     marginTop: "10%",
     display: "flex",
     justifyContent: "center"
   },
+
   btns: {
     width: "40%",
     height: "90%"
@@ -59,38 +65,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const Add = forwardRef((props, ref) => {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [cardStatus, setCardStatus] = useState("");
-  const [cardId, setId] = useState("");
-  const [cardTitle, setTitle] = useState("");
-  const [cardDescription, setDesc] = useState("");
-  const [updateStatus, setUpdateStatus] = useState("");
-  const [updateMessage, setUpdateMessage] = useState("");
-  const [taskModalTitle, setTaskModalTitle] = useState("Create New");
-  const [isNewTask, setIsNewTask] = useState(false);
+  const classes = useStyles()
+  const [open, setOpen] = useState(false)
+  const [openAlert, setOpenAlert] = useState(false)
+  const [cardStatus, setCardStatus] = useState("")
+  const [cardId, setId] = useState("") 
+  const [cardTitle, setTitle] = useState("")
+  const [cardDescription, setDesc] = useState("")
+  const [updateStatus, setUpdateStatus] = useState("")
+  const [updateMessage, setUpdateMessage] = useState("")
+  const [taskModalTitle, setTaskModalTitle] = useState("Create New")
+  const [isNewTask, setIsNewTask] = useState(false)
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
-    setOpenAlert(false);
+    if (reason === "clickaway") return
+    setOpenAlert(false)
   };
 
   const handleOpenModal = (isExistingTask, cardStatus, data) => {
     if (isExistingTask) {
-      const { cardId, cardTitle, cardDescription } = data;
-      setTaskModalTitle('Update');
-      setIsNewTask(false);
-      setCardStatus(cardStatus);
-      setId(cardId);
-      setTitle(cardTitle);
-      setDesc(cardDescription);
+      const { cardId, cardTitle, cardDescription } = data
+      setTaskModalTitle('Update')
+      setIsNewTask(false)
+      setCardStatus(cardStatus)
+      setId(cardId)
+      setTitle(cardTitle)
+      setDesc(cardDescription)
     }
-    setOpen(true);
+    setOpen(true)
   };
 
   const handleTaskDetails = (actionType) => {
@@ -104,30 +110,30 @@ const Add = forwardRef((props, ref) => {
       dataToUpadtePost.cardStatus = cardStatus;
     }
     props.handleBoardUpdate(dataToUpadtePost);
-    setOpen(false);
-    setOpenAlert(true);
-    setId("");
-    setTitle("");
-    setDesc("");
+    setOpen(false)
+    setOpenAlert(true)
+    setId("")
+    setTitle("")
+    setDesc("")
   }
 
   const handleUpdateStatus = (status, message) => {
-    if (status) setOpenAlert(true);
-    setUpdateStatus(status);
-    setUpdateMessage(message);
+    if (status) setOpenAlert(true)
+    setUpdateStatus(status)
+    setUpdateMessage(message)
   }
 
   const handleCloseModal = () => {
-    setId("");
-    setTitle("");
-    setDesc("");
-    setOpen(false);
-    setTaskModalTitle("Create New");
+    setId("")
+    setTitle("")
+    setDesc("")
+    setOpen(false)
+    setTaskModalTitle("Create New")
   };
 
   const openCreateTaskModal = () => {
-    setIsNewTask(true);
-    setOpen(true);
+    setIsNewTask(true)
+    setOpen(true)
   }
 
   useImperativeHandle(ref, () => ({
@@ -142,10 +148,13 @@ const Add = forwardRef((props, ref) => {
           <AddIcon />
         </Fab>
       </Tooltip>
+
       <Modal open={open} className={classes.modal}>
         <Container className={classes.container}>
           <p className={classes.taskModalTitle}>{taskModalTitle} Task</p>
+
           <form className={classes.form} autoComplete="off">
+            
             <div className={classes.item}>
               <TextField
                 required={true}
@@ -157,6 +166,7 @@ const Add = forwardRef((props, ref) => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
+
             <div className={classes.item}>
               <TextField
                 required={true}
@@ -172,6 +182,7 @@ const Add = forwardRef((props, ref) => {
                 onChange={(e) => setDesc(e.target.value)}
               />
             </div>
+
             <div className={classes.item}>
               <ButtonGroup
                 className={classes.btnGroup}
@@ -204,9 +215,11 @@ const Add = forwardRef((props, ref) => {
                   </Button>}
               </ButtonGroup>
             </div>
+
           </form>
         </Container>
       </Modal>
+
       <Snackbar
         open={openAlert}
         autoHideDuration={4000}
@@ -217,8 +230,9 @@ const Add = forwardRef((props, ref) => {
           {updateMessage}
         </Alert>
       </Snackbar>
-    </>
-  );
-});
 
-export default Add;
+    </>
+  )
+})
+
+export default Add

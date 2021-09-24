@@ -1,18 +1,19 @@
-import React from "react";
-import ListItem from "@material-ui/core/ListItem";
+import React from "react"
+import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import IconButton from "@material-ui/core/IconButton";
-import { Draggable } from "react-beautiful-dnd";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import EditIcon from '@material-ui/icons/Edit';
-import Tooltip from '@material-ui/core/Tooltip';
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction"
+import IconButton from "@material-ui/core/IconButton"
+import { Draggable } from "react-beautiful-dnd"
+import makeStyles from "@material-ui/core/styles/makeStyles"
+import EditIcon from '@material-ui/icons/Edit'
+import Tooltip from '@material-ui/core/Tooltip'
 
 
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(10),
   },
+
   boardEditBtn: {
     color: "#8a8aca",
     // border: "1px solid #8a8aca",
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
       color: "#d7d7d7 !important"
     },
   },
+
   listItem: {
     border: "1px solid darkgrey",
     width: "94%",
@@ -33,12 +35,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "darkmagenta !important"
     },
   },
+
   listItemTitle: {
     // fontFamily: "monospace",
     fontSize: "1.2em",
     fontWeight: 600,
     textTransform: "capitalize"
   },
+
   listItemDesc: {
     textTransform: "capitalize",
     fontSize: "0.9em",
@@ -48,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListItemCustom = ({ itemObject, index, openBoardModal, taskStatus }) => {
 
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <Draggable draggableId={itemObject.cardId} key={itemObject.cardId} index={index}>
@@ -93,4 +97,4 @@ const ListItemCustom = ({ itemObject, index, openBoardModal, taskStatus }) => {
   );
 };
 
-export default ListItemCustom;
+export default ListItemCustom

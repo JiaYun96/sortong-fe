@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-}));
+}))
 
 const Leftbar = (props) => {
 const classes = useStyles()

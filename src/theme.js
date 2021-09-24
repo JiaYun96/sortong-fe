@@ -6,9 +6,11 @@ export const theme = createTheme({
     primary: {
       main: purple[700],
     },
+
     secondary: {
       main: '#f44336',
     },
+    
     myButton: {
       backgroundColor: "blue",
       color: "white",

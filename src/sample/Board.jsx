@@ -199,8 +199,10 @@ const Board = (props) => {
     allCards.Pending.data = handleCardsIndices(pendingCards)
     allCards.Doing.data = handleCardsIndices(doingCards)
     allCards.Completed.data = handleCardsIndices(completedCards)
-    forceUpdate();
+    forceUpdate()
   }
+
+  // Get all cards for user for board
 
   const getAllCards = () => {
     if (userId) {
@@ -229,6 +231,8 @@ const Board = (props) => {
       handleInvalidUser()
     }
   }
+
+  // Update individual existing card for a board
 
   const updateCard = (data) => {
     const { cardId, reqBody } = data
@@ -265,6 +269,8 @@ const Board = (props) => {
     }
   }
 
+  // Create new card for board for user
+
   const createCard = (data) => {
     const { reqBody } = data;
     if (userId) {
@@ -295,6 +301,8 @@ const Board = (props) => {
       handleInvalidUser()
     }
   }
+
+  // Delete individual card from board for user
 
   const deleteCard = (data) => {
     const cardId = data
@@ -331,7 +339,7 @@ const Board = (props) => {
   }
 
   const handleBoardUpdate = async (data) => {
-    const { cardId, cardTitle, cardDescription, actionType } = data;
+    const { cardId, cardTitle, cardDescription, actionType } = data
     if (cardTitle || cardDescription || cardId) {
       const cardData = {}
       const reqBody = {}
@@ -347,7 +355,7 @@ const Board = (props) => {
           updateCard(cardData)
         } else {
           // API to create new card
-          createCard(cardData);
+          createCard(cardData)
         }
 
       } else if (actionType === 'delete') {
@@ -356,12 +364,12 @@ const Board = (props) => {
           // API to delete a card
           deleteCard(cardId);
         } else {
-          childRef.current.handleUpdateStatus("warning", "Provide Valid Details!");
+          childRef.current.handleUpdateStatus("warning", "Provide Valid Details!")
         }
 
       }
     } else {
-      childRef.current.handleUpdateStatus("warning", "Provide Valid Details!");
+      childRef.current.handleUpdateStatus("warning", "Provide Valid Details!")
     }
   }
 
@@ -382,25 +390,25 @@ const Board = (props) => {
       each column has to have a unique id, each item has to have a unique id and ideally consecutive else funky things happen
       each droppable has to have a unique id, each draggable also - cannot stress this enough because that is the only way
       the framework knows how what went from which list
-    */
+  */
 
   const onDragEnd = ({ source, destination }) => {
     // Make sure we have a valid destination
-    if (destination === undefined || destination === null) return null;
+    if (destination === undefined || destination === null) return null
 
     // Make sure we're actually moving the item
     if (
       source.droppableId === destination.droppableId &&
       destination.index === source.index
     )
-      return null;
+      return null
 
 
-    //---------------------> updating card status <---------------------//
+    //---------------------> UPDATING CARD STATUS <---------------------//
     const cardToBeUpdated = allCards[source.droppableId].data[source.index]
-    const cardCurrentStatus = source.droppableId.toLowerCase();
-    const cardStatusToBeUpdated = destination.droppableId.toLowerCase();
-    const cardStatus = cardStatusGenerator(cardToBeUpdated.cardStatus);
+    const cardCurrentStatus = source.droppableId.toLowerCase()
+    const cardStatusToBeUpdated = destination.droppableId.toLowerCase()
+    const cardStatus = cardStatusGenerator(cardToBeUpdated.cardStatus)
     const cardData = {
       cardId: cardToBeUpdated.cardId,
       reqBody: {}
@@ -409,7 +417,7 @@ const Board = (props) => {
       if (cardStatus === cardCurrentStatus && cardStatus !== cardStatusToBeUpdated) {
         const statusToBeUpdated = cardStatusGenerator(cardStatusToBeUpdated)
         if (statusToBeUpdated && typeof statusToBeUpdated === 'number') {
-          cardData.reqBody.status = statusToBeUpdated;
+          cardData.reqBody.status = statusToBeUpdated
           updateCard(cardData)
         } else {
           // console.log("Unable to update card")
@@ -418,17 +426,13 @@ const Board = (props) => {
       }
     }
 
-    //-----------> updating card status logics, Ends here <-----------------//
 
-
-
-
-    //---------------------> updating card index <---------------------//
-    const cardIndexToBeUpdated = destination.index ? destination.index + 1 : null;
+    //---------------------> UPDATE CARD INDEX <---------------------//
+    const cardIndexToBeUpdated = destination.index ? destination.index + 1 : null
     if (cardIndexToBeUpdated) {
-      cardData.reqBody.index = cardIndexToBeUpdated;
+      cardData.reqBody.index = cardIndexToBeUpdated
     }
-    //------------------> updating card index, Ends here <------------------//
+
 
     // Set start and end variables
     const start = columns[source.droppableId]
@@ -454,6 +458,7 @@ const Board = (props) => {
       setColumns((state) => ({ ...state, [newCol.id]: newCol }))
       return null
     } else {
+
       // If start is different from end, we need to update multiple columns
       // Filter the start list like before
       const newStartList = start.list.filter((_, idx) => idx !== source.index)
@@ -462,7 +467,7 @@ const Board = (props) => {
       const newStartCol = {
         id: start.id,
         list: newStartList
-      };
+      }
 
       // Make a new end list array
       const newEndList = end.list
@@ -481,28 +486,35 @@ const Board = (props) => {
         ...state,
         [newStartCol.id]: newStartCol,
         [newEndCol.id]: newEndCol
-      }));
+      }))
       return null
     }
   };
 
+  
   return (
     <Container className={classes.container} justify="center">
+      
       <div className={classes.boardTitle}>
         {boardTitle}
       </div>
+
       <CssBaseline />
+
       <DragDropContext onDragEnd={onDragEnd}>
+
         <Grid container direction={"row"} justify={"center"}>
           {Object.values(allCards).map((column) => {
             return (
               <Grid item>
                 <Column openBoardModal={handleBoardModal} column={column} key={column.id} />
               </Grid>
-            );
+            )
           })}
         </Grid>
+
       </DragDropContext>
+
       <div >
         <Add
           ref={childRef}
@@ -511,6 +523,7 @@ const Board = (props) => {
           val={true}
         />
       </div>
+
       <ToastContainer
         autoClose={3000}
         closeOnClick

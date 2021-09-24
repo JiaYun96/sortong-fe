@@ -99,10 +99,10 @@ export function Login({ auth, setAuth, ...props }) {
         }
       })
       .catch(err => {
-        console.log('Error while login : ', err)
-        const { success, message } = err.response && err.response.data || {};
-        setRegResponse(message || "Error While Login")
-        toast.warning(message || "Error While Login");
+        console.log('Login error : ', err)
+        const { success, message } = err.response && err.response.data || {}
+        setRegResponse(message || "Login error")
+        toast.warning(message || "Login error")
       })
   };
 
@@ -186,4 +186,4 @@ export function Login({ auth, setAuth, ...props }) {
   );
 }
 
-export default Login;
+export default Login

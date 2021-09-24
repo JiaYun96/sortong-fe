@@ -8,16 +8,16 @@ import {
   makeStyles,
   Typography,
   Divider,
-} from "@material-ui/core";
-import DateTime from './Date';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import AnnouncementIcon from '@material-ui/icons/Announcement';
+} from "@material-ui/core"
+import DateTime from './Date'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import AnnouncementIcon from '@material-ui/icons/Announcement'
 
 //Fullcalendar and Realted Plugins
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from "@fullcalendar/interaction"; // needed
-import listPlugin from '@fullcalendar/list'; //For List View
+import interactionPlugin from "@fullcalendar/interaction" // needed
+import listPlugin from '@fullcalendar/list' //For List View
 
 
 const useStyles = makeStyles((theme) => ({
@@ -69,31 +69,35 @@ const Rightbar = (props) => {
       <br/>
       <br/>
       <br/>
-      <div
+
+    <div
       style={{
-            backgroundColor: "Thistle",
-          }}>
+          backgroundColor: "Thistle",
+      }}>
 
       <div      
-        style={{
+          style={{
             color: "black",
             marginTop: 20,
             fontSize: 30,
             fontWeight: "bold",
             textAlign: "center",
           }}>
+            
             <p><AnnouncementIcon /> Reminders</p>
 
         </div>
-<TextareaAutosize 
-// aria-label="empty textarea" 
-placeholder="1. Feed the dog
-2. Wash the plates in the sink" 
-rowsMin={14} 
-style={ { width: "100%" } }/> 
-</div>
+        
+        <TextareaAutosize 
+            // aria-label="empty textarea" 
+            placeholder="1. Feed the dog
+            2. Wash the plates in the sink" 
+            rowsMin={14} 
+            style={ { width: "100%" } }/> 
+      
+      </div>
 
     </Container>
   )
 }
-  export default Rightbar;
+  export default Rightbar

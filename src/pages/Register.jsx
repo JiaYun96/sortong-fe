@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { ToastContainer, toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import TextField from '@material-ui/core/TextField'
+import Link from '@material-ui/core/Link'
+import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
+import PersonAddIcon from '@material-ui/icons/PersonAdd'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
+import { ToastContainer, toast } from "react-toastify"
+import { useHistory } from "react-router-dom"
+import axios from "axios"
 
 function Copyright() {
   return (
@@ -77,7 +77,7 @@ export default function Register(props) {
           setTimeout(() => {
             history.push("/login")
           }
-            , 3700);
+            , 3700)
           toast.success(message)
         }
       })

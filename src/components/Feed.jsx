@@ -122,8 +122,10 @@ const Feed = (props) => {
       history.push("/login")
     }
       , 3500);
-    toast.warning("Invalid user - please log in again");
-  };
+    toast.warning("Invalid user - please log in again")
+  }
+
+  // Fetch all board posts 
 
   const getAllPosts = () => {
     if (userId) {
@@ -136,25 +138,27 @@ const Feed = (props) => {
             } else {
               setPosts([]);
               setUpdateStatus("warning");
-              setUpdateMessage("No Boards Available!");
-              setOpenAlert(true);
+              setUpdateMessage("No Boards Available!")
+              setOpenAlert(true)
             }
           } else {
             setUpdateStatus("error");
-            setUpdateMessage("Unable to Fetch Boards!");
-            setOpenAlert(true);
+            setUpdateMessage("Unable to Fetch Boards!")
+            setOpenAlert(true)
           }
         })
         .catch(err => {
           console.log('Error while fetching all boards : ', err)
-          setUpdateStatus("error");
-          setUpdateMessage("Error in Fetching Boards");
-          setOpenAlert(true);
+          setUpdateStatus("error")
+          setUpdateMessage("Error in Fetching Boards")
+          setOpenAlert(true)
         })
     } else {
       handleInvalidUser();
     }
-  };
+  }
+
+  // Create New Board Post
 
   const handleCreatePost = (data) => {
     const { title } = data;
@@ -172,33 +176,35 @@ const Feed = (props) => {
               const { success } = response.data;
               if (success && success == true) {
                 getAllPosts();
-                setUpdateStatus("success");
-                setUpdateMessage("New Board Created");
-                setOpenAlert(true);
+                setUpdateStatus("success")
+                setUpdateMessage("New Board Created")
+                setOpenAlert(true)
               }
             } else {
               console.log(response)
               getAllPosts();
-              setUpdateStatus("warning");
-              setUpdateMessage("Board NOT Created");
-              setOpenAlert(true);
+              setUpdateStatus("warning")
+              setUpdateMessage("Board NOT Created")
+              setOpenAlert(true)
             }
           })
           .catch(err => {
-            console.log('Error in Creating A new board : ', err)
-            setUpdateStatus("error");
-            setUpdateMessage("Error in Creating Board");
-            setOpenAlert(true);
+            console.log('Error in creating new board : ', err)
+            setUpdateStatus("error")
+            setUpdateMessage("Error in creating new board")
+            setOpenAlert(true)
           })
       } else {
-        setUpdateStatus("warning");
-        setUpdateMessage("Nothing To Create");
+        setUpdateStatus("warning")
+        setUpdateMessage("Nothing to create")
         setOpenAlert(true);
       }
     } else {
       handleInvalidUser();
     }
-  };
+  }
+
+  // Update Board Post
 
   const handleUpdatePost = (data) => {
     const { boardId, title } = data
@@ -216,8 +222,8 @@ const Feed = (props) => {
               const { success, message } = response.data
               if (success && success == true) {
                 getAllPosts();
-                setUpdateStatus("success");
-                setUpdateMessage(message);
+                setUpdateStatus("success")
+                setUpdateMessage(message)
                 setOpenAlert(true);
               }
             } else {
@@ -229,9 +235,9 @@ const Feed = (props) => {
             }
           })
           .catch(err => {
-            console.log('Error in Creating A new board : ', err)
+            console.log('Error in creating new board : ', err)
             setUpdateStatus("error")
-            setUpdateMessage("Error in Creating Board")
+            setUpdateMessage("Error in creating new board")
             setOpenAlert(true)
           })
       } else {
@@ -242,7 +248,9 @@ const Feed = (props) => {
     } else {
       handleInvalidUser();
     }
-  };
+  }
+
+  // Delete Board Post
 
   const handleDeletePost = (data) => {
     const { boardId } = data;
@@ -282,19 +290,21 @@ const Feed = (props) => {
     } else {
       handleInvalidUser()
     }
-  };
+  }
+
+  // For individual board posts 
 
   const handlePostView = (id, title) => {
     setBoardId(id)
     setBoardTitle(title)
     setPostView(false)
-  };
+  }
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") 
     return
     setOpenAlert(false)
-  };
+  }
 
   const handlePostDetails = ({ actionType, id, titleToUpdate }) => {
     if (actionType === 'save') {
@@ -317,7 +327,7 @@ const Feed = (props) => {
       }
       handleDeletePost(dataToDeleteBoard)
     }
-  };
+  }
 
   const handleOpenModal = (isExistingPost, title) => {
     if (isExistingPost && title) {
@@ -329,12 +339,12 @@ const Feed = (props) => {
       setPostTitle('')
       setPostModalTitle('Create New')
     }
-    setOpenModal(true);
-  };
+    setOpenModal(true)
+  }
 
   const handleCloseModal = () => {
-    setOpenModal(false);
-  };
+    setOpenModal(false)
+  }
 
   const handlePost = (actionType) => {
     const dataToUpadtePost = {
@@ -381,7 +391,6 @@ const Feed = (props) => {
             </Button>
           </Tooltip>
 
-          // Display all boards for user
           <Grid container className={classes.boardsGridContainer}>
             {posts.map(post =>
               <Grid>
@@ -428,7 +437,7 @@ const Feed = (props) => {
       >
         <div className={classes.paper}>
           <div className={classes.postActionModal}>
-            <p className={classes.postModalTitle}>{postModalTitle} Board Post Title</p>
+            <p className={classes.postModalTitle}>{postModalTitle} Board Post</p>
             
             <TextField required value={postTitle} onChange={(e) => setPostTitle(e.target.value)}>
             </TextField>
@@ -444,7 +453,7 @@ const Feed = (props) => {
       </Modal>
 
     </>
-  );
-};
+  )
+}
 
 export default withCookies(Feed)
