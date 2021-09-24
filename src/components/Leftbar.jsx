@@ -1,12 +1,12 @@
-import { Container, makeStyles, Typography, Grid } from "@material-ui/core";
-import Box from '@material-ui/core/Box';
+import { Container, makeStyles, Typography, Grid } from "@material-ui/core"
+import Box from '@material-ui/core/Box'
 import {
   ExitToApp,
   Home,
   AccountCircle,
   Work,
-} from "@material-ui/icons";
-import Link from '@material-ui/core/Link';
+} from "@material-ui/icons"
+import Link from '@material-ui/core/Link'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
       border: "1px solid #ece7e7",
     },
   },
+
   item: {
     display: "flex",
     alignItems: "center",
@@ -36,58 +37,78 @@ const useStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
   },
+
   icon: {
     marginRight: theme.spacing(1),
     [theme.breakpoints.up("sm")]: {
       fontSize: "24px",
     },
   },
+
   text: {
     fontWeight: 500,
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
+
 }));
 
-const Leftbar = () => {
-  const classes = useStyles();
-  return (
-    <Container className={classes.container} justify = "center">
-      {/* <Box m={2}>
-      <Grid container justify = "center">
-        <div style={classes.logoHorizontallyCenter}>
-          <img src={"https://imgur.com/BLdxREs.png"} className={classes.logo} alt="logo" />
-        </div> */}
-        {/* <Typography variant="h6" className={classes.logoSm} fontWeight={5700}>
-            SORTONG
-          </Typography> */}
-      {/* </Grid>
-      </Box> */}
+const Leftbar = (props) => {
+const classes = useStyles()
 
-<div>
-      <Link className={classes.item} href="http://localhost:3000/" style={{ textDecoration: 'none' }}>
+  return (
+    <Container className={classes.container} style={{display: props && props.isVisible}} justify = "center">
+      
+      <Box m={2}>
+        
+        <Grid container justify = "center">
+          
+          <div
+            style={{
+              color: "purple",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: "17px",
+            }}>
+
+            <Typography variant="h7">
+                Your INKredible Planner
+            </Typography>
+          </div>
+
+          <div style={classes.logoHorizontallyCenter}>
+              <img src={"https://imgur.com/BLdxREs.png"} className={classes.logo} alt="logo" />
+          </div>
+        
+        </Grid>
+      
+      </Box>
+
+      <div>
+      {/* { <Link className={classes.item} href="http://localhost:3000/" style={{ textDecoration: 'none' }}>
         <Home className={classes.icon} />
         <Typography className={classes.text}>Homepage</Typography>
-      </Link>
+      </Link> */}
 
-      <Link className={classes.item} href="http://localhost:3000/login" style={{ textDecoration: 'none' }}>
-        <AccountCircle className={classes.icon} />
-        <Typography className={classes.text}>My Profile</Typography>
-      </Link>
+        <Link className={classes.item} href="" style={{ textDecoration: 'none' }}>
+          <AccountCircle className={classes.icon} />
+          <Typography className={classes.text}>My Profile</Typography>
+        </Link>
+        
+        <Link className={classes.item} href="/boards" style={{ textDecoration: 'none' }}>
+          <Work className={classes.icon} />
+          <Typography className={classes.text}>My Boards</Typography>
+        </Link>
+        
+        <Link className={classes.item} href="http://localhost:3000/" style={{ textDecoration: 'none' }}>
+          <ExitToApp className={classes.icon} />
+          <Typography className={classes.text}>Logout</Typography>
+        </Link>
       
-      <Link className={classes.item} href="http://localhost:3000/sample" style={{ textDecoration: 'none' }}>
-        <Work className={classes.icon} />
-        <Typography className={classes.text}>My Projects</Typography>
-      </Link>
-      
-      <Link className={classes.item} href="#" style={{ textDecoration: 'none' }}>
-        <ExitToApp className={classes.icon} />
-        <Typography className={classes.text}>Logout</Typography>
-      </Link>
-</div>    
+      </div>    
     </Container>
-  );
-};
+  )
+}
 
-export default Leftbar;
+export default Leftbar

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,9 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { ToastContainer, toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -44,8 +47,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register() {
-  const classes = useStyles();
+export default function Register(props) {
+  const classes = useStyles()
+  let history = useHistory()
+  const [fullName, setFullName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [regResponse, setRegResponse] = useState("")
+  const [regUserId, setRegUserId] = useState("")
+
+  useEffect(() => {
+    props.handleVisibility('none')
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post(`${process.env.REACT_APP_BACKEND_API_BASE_URL}/api/v1/user/register`, {
+      fullName,
+      email,
+      password,
+      confirmPassword
+    })
+      .then(response => {
+        if (response && response.data) {
+          const { userId, message } = response.data;
+          setRegUserId(userId);
+          setRegResponse(message);
+          setTimeout(() => {
+            history.push("/login")
+          }
+            , 3700);
+          toast.success(message)
+        }
+      })
+      .catch(err => {
+        const { success, message } = err.response.data;
+        if (success === false) setRegResponse(message)
+        toast.warning(err.response.data.message);
+      })
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -73,6 +114,7 @@ export default function Register() {
                 id="fullName"
                 label="Full Name"
                 autoFocus
+                onChange={(e) => setFullName(e.target.value)}
               />
             </Grid>
 
@@ -85,6 +127,7 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 // autoComplete="email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
 
@@ -98,6 +141,7 @@ export default function Register() {
                 type="password"
                 id="password"
                 // autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
 
@@ -111,9 +155,10 @@ export default function Register() {
                 type="confirmPassword"
                 id="confirmPassword"
                 // autoComplete="current-password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </Grid>
-            
+
           </Grid>
 
           <Button
@@ -122,6 +167,7 @@ export default function Register() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={(e) => handleSubmit(e)}
           >
             Sign Up
           </Button>
@@ -140,7 +186,13 @@ export default function Register() {
       <Box mt={5}>
         <Copyright />
       </Box>
-
+      <ToastContainer
+        autoClose={4000}
+        closeOnClick
+        rtl={false}
+        draggable
+        pauseOnHover
+      />
     </Container>
   );
 }

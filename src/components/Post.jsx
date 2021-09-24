@@ -1,62 +1,90 @@
+import React from 'react';
 import {
-    Button,
-    Card,
-    CardActionArea,
-    CardActions,
-    CardContent,
-    CardMedia,
-    makeStyles,
-    Typography,
-  } from "@material-ui/core";
-  import CssBaseline from '@material-ui/core/CssBaseline';
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import EditIcon from '@material-ui/icons/Edit';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Tooltip from '@material-ui/core/Tooltip';
 
-  const useStyles = makeStyles((theme) => ({
-    card: {
-      width: 270,
-      marginBottom: theme.spacing(5),
-    },
-    root: {
-      flexGrow: 1,
-      padding: theme.spacing(2)
-    },
-    media: {
-      height: 250,
-      [theme.breakpoints.down("sm")]: {
-        height: 150,
-      },
-    },
-  }));
-  
-  const Post = ({ img, title }) => {
-    const classes = useStyles();
-    return (
+const useStyles = makeStyles((theme) => ({
+  card: {
+    width: 270,
+    marginBottom: theme.spacing(5),
+  },
+  postContent: {
+    minHeight: "14vh"
+  },
+  postTitle: {
+    minHeight: "7vh",
+    textTransform: "capitalize"
+  },
+  postActions: {
+    display: "flex",
+    justifyContent: "space-evenly",
+  },
+  postActionBtns: {
+    border: "1px solid #80008029"
+  }
+}));
+
+const Post = (props) => {
+  const { img, title, id, handlePostView, handleExistingPost } = props;
+  const classes = useStyles();
+
+  const handlePostData = () => {
+    const data = {
+      id: id,
+      title: title
+    }
+    handleExistingPost(data)
+  }
+
+  return (
+    <>
       <Card className={classes.card} >
-              <CssBaseline />
-
+        <CssBaseline />
         <CardActionArea>
-          {/* <CardMedia className={classes.media} image={img} title="My Post" /> */}
-          <CardContent>
-            <Typography gutterBottom variant="h5">
-              {title}
-            </Typography>
-
+          <CardContent className={classes.postContent}>
             <Typography variant="body2">
-              Due Date: 
+              Board Post
+            </Typography>
+            <Typography className={classes.postTitle} gutterBottom variant="h5">
+              {title}
             </Typography>
           </CardContent>
         </CardActionArea>
-        
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
+        <CardActions className={classes.postActions}>
+          <Tooltip title="Edit Board">
+            <Button
+              className={classes.postActionBtns}
+              size="small"
+              color="primary"
+              onClick={() => handlePostData()}
+            >
+              <EditIcon />
+            </Button>
+          </Tooltip>
+          <Tooltip title="View Board">
+            <Button
+              className={classes.postActionBtns}
+              size="small"
+              color="primary"
+              onClick={() => handlePostView(id, title)}
+            >
+              <VisibilityIcon />
+            </Button>
+          </Tooltip>
         </CardActions>
-
       </Card>
-    );
-  };
-  
-  export default Post;
+    </>
+  );
+};
+
+export default Post;

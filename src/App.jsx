@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {BrowserRouter as Router, Switch, Route, Redirect,} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, } from "react-router-dom";
 
 // React Toastify 
 import "react-toastify/dist/ReactToastify.css";
@@ -29,10 +29,10 @@ import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import Register from "./pages/Register";
 import Profile from "./pages/Profile"
-import Dashboard from "./pages/Dashboard"
+// import Dashboard from "./pages/Dashboard"
 
 // Boards
-import Sample from "./sample/Sample"
+import Board from "./sample/Board"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+    hide: {
+      display: "none !important"
+    },
+    show: {
+      display: "block"
+    }
   },
 }));
 
@@ -60,22 +66,23 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const classes = useStyles();
+  const [isAddtionalCompsTobeVisible, setIsAddtionalCompsTobeVisible] = useState("none");
+
+  const handleVisibility = (value) => {
+    setIsAddtionalCompsTobeVisible(value)
+  }
 
   return (
-        <Router>
-
-    <div>
-      <Navbar />
-      <Grid container>
-        <Grid item sm={2} xs={2}>
-          <Leftbar />
-        </Grid>
-        <Grid item sm={7} xs={10}>
-          {/* <Feed /> */}
-
-          <Switch>
-
-          {/* <ProtectedLogin
+    <Router>
+      <div>
+        <Navbar isVisible={isAddtionalCompsTobeVisible} />
+        <Grid container>
+          <Grid item sm={2} xs={2}>
+            <Leftbar isVisible={isAddtionalCompsTobeVisible} />
+          </Grid>
+          <Grid item sm={7} xs={10}>
+            <Switch>
+              {/* <ProtectedLogin
               path="/login-user"
               auth={auth}
               setAuth={setAuth}
@@ -88,23 +95,18 @@ const App = () => {
               setAuth={() => setAuth(true)}
               component={Dashboard}
             /> */}
-            <Route path="/landing" component={Landing}/> 
-            <Route path="/sample" component={Sample}/>         
-            <Route path="/register" component={Register}/>
-            <Route path="/profile" component={Profile}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/" component={Feed}/>
-
-
-          </Switch>
-
+              <Route path="/boards" component={() => <Feed handleVisibility={handleVisibility} />} />
+              <Route path="/register" component={() => <Register handleVisibility={handleVisibility} />} />
+              <Route path="/profile" component={() => <Profile handleVisibility={handleVisibility} />} />
+              <Route path="/login" component={() => <Login handleVisibility={handleVisibility} />} />
+              <Route path="/" component={() => <Landing handleVisibility={handleVisibility} />} />
+            </Switch>
+          </Grid>
+          <Grid item sm={3} className={classes.right}>
+            <Rightbar isVisible={isAddtionalCompsTobeVisible} />
+          </Grid>
         </Grid>
-        <Grid item sm={3} className={classes.right}>
-          <Rightbar />
-        </Grid>
-      </Grid>
-      <Add />
-    </div>
+      </div>
     </Router>
   );
 };
